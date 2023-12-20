@@ -71,27 +71,27 @@ function botonesPaginador() {
     mostrarSeccion();
 }
 
-function paginaAnterior() { 
+function paginaAnterior() {
     const paginaAnterior = document.querySelector('#anterior');
-    paginaAnterior.addEventListener('click',function () {
+    paginaAnterior.addEventListener('click', function () {
         if (paso <= pasoInicial) return;
         paso--;
-        
+
         botonesPaginador();
     })
 }
 
-function paginaSiguiente() { 
+function paginaSiguiente() {
     const paginaSiguiente = document.querySelector('#siguiente');
-    paginaSiguiente.addEventListener('click',function () {
+    paginaSiguiente.addEventListener('click', function () {
         if (paso >= pasoFinal) return;
         paso++;
-        
+
         botonesPaginador();
     })
 }
 
-async function consultarAPI() { 
+async function consultarAPI() {
     try {
         const url = 'http://localhost:4000/api/servicios';
         const resultado = await fetch(url);
@@ -99,12 +99,12 @@ async function consultarAPI() {
 
         mostrarServicios(servicios);
 
-    } catch (error) { 
+    } catch (error) {
         console.log(error);
     }
 }
 
-function mostrarServicios(servicios) { 
+function mostrarServicios(servicios) {
     servicios.forEach(servicio => {
         const { id, nombre, precio } = servicio;
 
