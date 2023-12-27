@@ -27,9 +27,10 @@ class LoginController
                     //Verificar la contraseña
                     if ($usuario->comprobarPasswordAndVerificado($auth->password)) {
                         //Autenticar al usuario
-                        if(!isset($_SESSION)) {
+                        if (!isset($_SESSION)) {
                             session_start();
-                        };
+                        }
+                        ;
 
                         $_SESSION['id'] = $usuario->id;
                         $_SESSION['nombre'] = $usuario->nombre . " " . $usuario->apellido;
@@ -53,13 +54,15 @@ class LoginController
         }
         $alertas = Usuario::getAlertas();
 
-        $router->render('auth/login',[
-            'alertas'=>$alertas
+        $router->render('auth/login', [
+            'alertas' => $alertas
         ]);
     }
     public static function logout()
     {
-        echo 'Desde logout';
+        session_start();
+        $_SESSION = [];
+        header('Location: /');
     }
     public static function olvide(Router $router)
     {
@@ -77,14 +80,14 @@ class LoginController
                     $usuario->crearToken();
                     $usuario->guardar();
 
-                    $email = new Email($usuario->email,$usuario->nombre,$usuario->token);
+                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
                     $email->enviarInstrucciones();
 
                     //Alerta de éxito
                     Usuario::setAlerta('exito', 'Revisa tu email');
 
                 } else {
-                    Usuario::setAlerta('error','El usuario no existe o no está confirmado.');
+                    Usuario::setAlerta('error', 'El usuario no existe o no está confirmado.');
                 }
             }
         }
@@ -129,8 +132,8 @@ class LoginController
         }
 
         $alertas = Usuario::getAlertas();
-        $router->render('/auth/recuperar-password',[
-            'alertas'=>$alertas,
+        $router->render('/auth/recuperar-password', [
+            'alertas' => $alertas,
             'error' => $error
         ]);
     }
