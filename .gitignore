@@ -1,3 +1,6 @@
-node_modules
-vendor
-includes/.env
+# Ignorar directorios
+/node_modules
+/vendor
+
+# Ignorar archivos específicos
+/includes/.env
