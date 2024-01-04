@@ -4,3 +4,4 @@
 
 # Ignorar archivos específicos
 /includes/.env
+.DS_Store
